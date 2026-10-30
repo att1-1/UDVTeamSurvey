@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="UDVTeamSurvey.MainPage" x:Name="_QuestionnairePage_" Title="Анкета участника" Shell.NavBarIsVisible="False" BackgroundColor="#F5F7FB">
+    <ScrollView x:Name="_MainScrollView_">
+        <VerticalStackLayout x:Name="_PageStack_" Padding="16,24,16,36" Spacing="16" MaximumWidthRequest="700" HorizontalOptions="Fill">
+            <!-- Небольшая шапка вместо большого декоративного баннера. -->
+            <Grid x:Name="_HeaderGrid_" RowDefinitions="Auto,Auto" ColumnDefinitions="*,60" ColumnSpacing="14" RowSpacing="5" Margin="0,0,0,6">
+                <Label x:Name="_TitleLabel_" Grid.Row="0" Grid.Column="0" Text="Анкета участника" FontSize="23" FontAttributes="Bold" TextColor="#17243D"/>
+                <Label x:Name="_IntroLabel_" Grid.Row="1" Grid.Column="0" Text="Профиль для участия в IT-команде: навыки, интересы и доступность." FontSize="13" FontAttributes="None" TextColor="#58677D"/>
+                <Image x:Name="_BadgeImage_" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Source="team_badge.png" Aspect="AspectFit" HeightRequest="56" WidthRequest="56" VerticalOptions="Center"/>
+            </Grid>
+            <Border x:Name="_FormBorder_" BackgroundColor="#FFFFFF" Stroke="#E1E7F0" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="18">
+                <VerticalStackLayout x:Name="_FormStack_" Spacing="14">
+                    <Label x:Name="_DetailsTitleLabel_" Text="Основная информация" FontSize="17" FontAttributes="Bold" TextColor="#17243D"/>
+                    <Grid x:Name="_IdentityGrid_" ColumnDefinitions="*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6">
+                        <Label x:Name="_NameCaptionLabel_" Grid.Row="0" Grid.Column="0" Text="Имя *" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <Entry x:Name="_NameEntry_" Grid.Row="1" Grid.Column="0" Placeholder="Например, Евгений" Keyboard="Text" MaxLength="60" HeightRequest="44" FontSize="15" TextColor="#17243D" PlaceholderColor="#8190A5" BackgroundColor="#F4F7FB" TextChanged="OnRequiredFieldChanged"/>
+                        <Label x:Name="_SecondCaptionLabel_" Grid.Row="2" Grid.Column="0" Text="Электронная почта *" FontSize="14" FontAttributes="Bold" TextColor="#26364F" Margin="0,10,0,0"/>
+                        <Entry x:Name="_SecondEntry_" Grid.Row="3" Grid.Column="0" Placeholder="name@example.com" Keyboard="Email" MaxLength="60" HeightRequest="44" FontSize="15" TextColor="#17243D" PlaceholderColor="#8190A5" BackgroundColor="#F4F7FB" TextChanged="OnRequiredFieldChanged"/>
+                    </Grid>
+                    <BoxView x:Name="_FirstDivider_" HeightRequest="1" Color="#E8EDF5" Margin="0,2"/>
+                    <Label x:Name="_PreferencesTitleLabel_" Text="Опыт и предпочтения" FontSize="17" FontAttributes="Bold" TextColor="#17243D"/>
+                    <VerticalStackLayout x:Name="_RoleStack_" Spacing="5">
+                        <Label x:Name="_PickerCaptionLabel_" Text="Предпочитаемая роль" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <Picker x:Name="_RolePicker_" Title="Выбери роль" TitleColor="#8190A5" TextColor="#17243D" BackgroundColor="#F4F7FB" FontSize="15" SelectedIndex="-1" HeightRequest="44" SelectedIndexChanged="OnRoleChanged">
+                            <Picker.Items>
+                                <x:String>Разработчик</x:String>
+                                <x:String>Тестировщик</x:String>
+                                <x:String>Аналитик</x:String>
+                                <x:String>Дизайнер</x:String>
+                                <x:String>Менеджер проекта</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ExperienceStack_" Spacing="5">
+                        <Label x:Name="_RadioCaptionLabel_" Text="Опыт участия в проектах" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <RadioButton x:Name="_OptionOneRadio_" Content="Опыта ещё не было" GroupName="UDVTeamSurveyExperience" Value="none" IsChecked="True" TextColor="#17243D" FontSize="14" HeightRequest="34" CheckedChanged="OnChoiceChanged"/>
+                        <RadioButton x:Name="_OptionTwoRadio_" Content="До 6 месяцев" GroupName="UDVTeamSurveyExperience" Value="under6" TextColor="#17243D" FontSize="14" HeightRequest="34" CheckedChanged="OnChoiceChanged"/>
+                        <RadioButton x:Name="_OptionThreeRadio_" Content="6-12 месяцев" GroupName="UDVTeamSurveyExperience" Value="6to12" TextColor="#17243D" FontSize="14" HeightRequest="34" CheckedChanged="OnChoiceChanged"/>
+                        <RadioButton x:Name="_OptionFourRadio_" Content="От 1 до 2 лет" GroupName="UDVTeamSurveyExperience" Value="1to2" TextColor="#17243D" FontSize="14" HeightRequest="34" CheckedChanged="OnChoiceChanged"/>
+                        <RadioButton x:Name="_OptionFiveRadio_" Content="Более 2 лет" GroupName="UDVTeamSurveyExperience" Value="over2" TextColor="#17243D" FontSize="14" HeightRequest="34" CheckedChanged="OnChoiceChanged"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_CheckStack_" Spacing="5">
+                        <Label x:Name="_PreferencesCaptionLabel_" Text="Интересные направления" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <Grid x:Name="_CheckOneRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraOneCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraOneLabel_" Text="Backend-разработка" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Grid x:Name="_CheckTwoRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraTwoCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraTwoLabel_" Text="Frontend-разработка" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Grid x:Name="_CheckThreeRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraThreeCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraThreeLabel_" Text="Мобильная разработка" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Grid x:Name="_CheckFourRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraFourCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraFourLabel_" Text="Тестирование и обеспечение качества" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Grid x:Name="_CheckFiveRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraFiveCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraFiveLabel_" Text="Аналитика и работа с данными" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Grid x:Name="_CheckSixRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraSixCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraSixLabel_" Text="UI/UX-дизайн" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Grid x:Name="_CheckSevenRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                            <CheckBox x:Name="_ExtraSevenCheck_" IsChecked="False" Color="#4169D1" Grid.Row="0" Grid.Column="0" CheckedChanged="OnChoiceChanged"/>
+                            <Label x:Name="_ExtraSevenLabel_" Text="Управление IT-проектами" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                    <Grid x:Name="_SwitchRow_" ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="8">
+                        <Switch x:Name="_FlexibleSwitch_" IsToggled="False" OnColor="#4169D1" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Toggled="OnSwitchChanged"/>
+                        <Label x:Name="_SwitchLabel_" Text="Готов участвовать в очных встречах" FontSize="14" FontAttributes="None" TextColor="#17243D" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" LineBreakMode="WordWrap"/>
+                    </Grid>
+                    <BoxView x:Name="_SecondDivider_" HeightRequest="1" Color="#E8EDF5" Margin="0,2"/>
+                    <Label x:Name="_AvailabilityTitleLabel_" Text="Доступность" FontSize="17" FontAttributes="Bold" TextColor="#17243D"/>
+                    <VerticalStackLayout x:Name="_DateStack_" Spacing="5">
+                        <Label x:Name="_DateCaptionLabel_" Text="Дата начала работы" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <DatePicker x:Name="_StartDatePicker_" Format="dd.MM.yyyy" Date="11/01/2026" MinimumDate="01/01/2026" MaximumDate="12/31/2030" TextColor="#17243D" BackgroundColor="#F4F7FB" FontSize="15" HeightRequest="44" DateSelected="OnDateChanged"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_HoursStack_" Spacing="4">
+                        <Label x:Name="_NumberCaptionLabel_" Text="Сколько часов в неделю готов уделять проекту?" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <Slider x:Name="_HoursSlider_" Minimum="1" Maximum="40" Value="10" MinimumTrackColor="#4169D1" MaximumTrackColor="#DCE4F1" ThumbColor="#4169D1" ValueChanged="OnHoursChanged"/>
+                        <Label x:Name="_HoursLabel_" Text="{Binding Source={x:Reference _HoursSlider_}, Path=Value, Mode=OneWay, StringFormat='Часов в неделю: {0:F0}'}" FontSize="13" FontAttributes="None" TextColor="#58677D"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_NotesStack_" Spacing="5">
+                        <Label x:Name="_NotesCaptionLabel_" Text="Дополнительная информация" FontSize="14" FontAttributes="Bold" TextColor="#26364F"/>
+                        <Editor x:Name="_NotesEditor_" Placeholder="Например: знаком с C#, SQL и Git. Хочу попробовать себя в backend-разработке." AutoSize="TextChanges" MaxLength="250" MinimumHeightRequest="90" FontSize="14" TextColor="#17243D" PlaceholderColor="#8190A5" BackgroundColor="#F4F7FB" TextChanged="OnNotesChanged"/>
+                    </VerticalStackLayout>
+                    <Label x:Name="_ReadyLabel_" Text="Данные заполнены - можно посмотреть результат" FontSize="12" FontAttributes="None" TextColor="#237655" IsVisible="False"/>
+                </VerticalStackLayout>
+            </Border>
+            <Grid x:Name="_ButtonsGrid_" ColumnDefinitions="*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="8">
+                <Button x:Name="_SubmitButton_" Grid.Row="0" Grid.Column="0" Text="Показать результат" Clicked="OnShowResultClicked" IsEnabled="False" HeightRequest="50" BackgroundColor="#4169D1" TextColor="#FFFFFF" CornerRadius="10" FontSize="15"/>
+                <Button x:Name="_ClearButton_" Grid.Row="1" Grid.Column="0" Text="Очистить анкету" Clicked="OnClearClicked" HeightRequest="46" BackgroundColor="#E8EDF5" TextColor="#26364F" CornerRadius="10" FontSize="14"/>
+            </Grid>
+            <Border x:Name="_ResultBorder_" BackgroundColor="#EDF4FF" Stroke="#D6E3FB" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18" IsVisible="False">
+                <VerticalStackLayout x:Name="_ResultStack_" Spacing="10">
+                    <Label x:Name="_ResultCaptionLabel_" Text="Результат анкеты" FontSize="18" FontAttributes="Bold" TextColor="#17243D"/>
+                    <VerticalStackLayout x:Name="_ResultName_Row_" Spacing="2">
+                        <Label x:Name="_ResultName_Caption_" Text="Имя" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultName_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultEmail_Row_" Spacing="2">
+                        <Label x:Name="_ResultEmail_Caption_" Text="Электронная почта" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultEmail_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultRole_Row_" Spacing="2">
+                        <Label x:Name="_ResultRole_Caption_" Text="Предпочитаемая роль" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultRole_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultExperience_Row_" Spacing="2">
+                        <Label x:Name="_ResultExperience_Caption_" Text="Опыт участия в проектах" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultExperience_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultInterests_Row_" Spacing="2">
+                        <Label x:Name="_ResultInterests_Caption_" Text="Интересные направления" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultInterests_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultMeeting_Row_" Spacing="2">
+                        <Label x:Name="_ResultMeeting_Caption_" Text="Очные встречи" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultMeeting_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultStartDate_Row_" Spacing="2">
+                        <Label x:Name="_ResultStartDate_Caption_" Text="Дата начала работы" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultStartDate_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultHours_Row_" Spacing="2">
+                        <Label x:Name="_ResultHours_Caption_" Text="Часов в неделю" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultHours_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="_ResultNotes_Row_" Spacing="2">
+                        <Label x:Name="_ResultNotes_Caption_" Text="Дополнительная информация" FontSize="12" FontAttributes="None" TextColor="#5D6C82"/>
+                        <Label x:Name="_ResultNotes_Value_" Text="" FontSize="14" FontAttributes="None" TextColor="#17243D" LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
